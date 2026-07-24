@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from app.workflows.loop_graph import build_loop_graph
+from app.workflows.loop_graph import build_loop_graph, response_text
 
 
 def initial_state(max_iterations: int = 2, quality_threshold: float = 0.85) -> dict[str, object]:
@@ -29,6 +29,16 @@ class FakeModel:
         """Return the next scripted response and record the request prompt."""
         self.prompts.append(prompt)
         return SimpleNamespace(content=next(self.responses))
+
+
+def test_response_text_extracts_text_blocks_without_serializing_other_content() -> None:
+    """Structured model content should not leak into the user-facing answer."""
+    content = [
+        {"type": "text", "text": "Readable answer"},
+        {"type": "image", "data": "very-long-encoded-payload"},
+    ]
+
+    assert response_text(content) == "Readable answer"
 
 
 def test_score_is_parsed_and_passing_score_stops_early() -> None:

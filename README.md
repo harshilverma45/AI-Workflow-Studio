@@ -27,9 +27,13 @@ npm install
 npm run dev
 ```
 
-## Current phase
+## Project status
 
-Phase 1 backend persistence is working with a dependency-free deterministic fallback. The planned AI provider is Gemini using its available free API tier. OpenAI and Ollama are not required for this project.
+Phase 1 is complete: execution API, SQLite persistence, live WebSocket iteration
+updates, a readable refinement timeline, and execution history are working. The next
+phase is cross-run AI memory and, later, execution comparison. The planned AI provider
+is Gemini using its available free API tier. OpenAI and Ollama are not required for
+this project.
 
 ## Gemini provider
 
@@ -38,7 +42,7 @@ Create a Gemini API key through Google AI Studio, then set these values in `back
 ```powershell
 MODEL_PROVIDER=gemini
 GEMINI_API_KEY=your-gemini-key
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.6-flash
 ```
 
 Gemini free-tier quotas and model availability are controlled by Google and can change. The application does not require a paid account.
