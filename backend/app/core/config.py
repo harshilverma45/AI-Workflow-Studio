@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     database_url: str = Field(default="sqlite:///./loop.db", validation_alias="DATABASE_URL")
     model_provider: str = Field(default="local", validation_alias="MODEL_PROVIDER")
     gemini_api_key: str = Field(default="", validation_alias="GEMINI_API_KEY")
-    gemini_model: str = Field(default="gemini-2.5-flash", validation_alias="GEMINI_MODEL")
+    gemini_model: str = Field(default="gemini-3.6-flash", validation_alias="GEMINI_MODEL")
     max_iterations: int = Field(default=2, validation_alias="MAX_ITERATIONS")
     quality_threshold: float = Field(default=0.85, validation_alias="QUALITY_THRESHOLD")
 

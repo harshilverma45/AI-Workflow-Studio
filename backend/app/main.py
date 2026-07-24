@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import execution
 from app.core.config import settings
 from app.db.database import create_db_and_tables
+from app.websocket import execution as execution_websocket
 
 app = FastAPI(title="AI Workflow Studio", version="0.1.0")
 
@@ -16,6 +17,7 @@ app.add_middleware(
 )
 
 app.include_router(execution.router, prefix="/api")
+app.include_router(execution_websocket.router)
 
 
 @app.on_event("startup")

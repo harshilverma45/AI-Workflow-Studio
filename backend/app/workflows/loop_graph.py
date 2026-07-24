@@ -18,6 +18,22 @@ class LoopState(TypedDict):
     iteration_results: list[dict[str, object]]
 
 
+def response_text(content: Any) -> str:
+    """Extract displayable text from LangChain's string or structured content."""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, dict):
+        text = content.get("text")
+        return text if isinstance(text, str) else ""
+    if isinstance(content, list):
+        return "\n".join(
+            item["text"]
+            for item in content
+            if isinstance(item, dict) and isinstance(item.get("text"), str)
+        )
+    return str(content)
+
+
 def build_loop_graph(model: Any):
     """Build a Gemini-backed Loop Engineering graph."""
 
@@ -27,7 +43,7 @@ def build_loop_graph(model: Any):
             "Generate the best possible answer for this user prompt. "
             f"User prompt:\n\n{state['current_prompt']}"
         )
-        return {"response": str(response.content)}
+        return {"response": response_text(response.content)}
 
     def critique(state: LoopState) -> dict[str, object]:
         """Critique the generated answer and extract its numeric score."""
@@ -36,7 +52,7 @@ def build_loop_graph(model: Any):
             "using exactly 'SCORE: number', then explain the most important improvement.\n\n"
             f"User prompt: {state['original_prompt']}\n\nAnswer: {state['response']}"
         )
-        evaluation = str(evaluation_response.content)
+        evaluation = response_text(evaluation_response.content)
         score_match = re.search(
             r"SCORE:\s*(0(?:\.\d+)?|1(?:\.0+)?)", evaluation, re.IGNORECASE
         )
