@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy import Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.database import Base
@@ -15,4 +15,4 @@ class Iteration(Base):
     prompt: Mapped[str] = mapped_column(String, nullable=False)
     response: Mapped[str | None] = mapped_column(String, nullable=True)
     evaluation: Mapped[str | None] = mapped_column(String, nullable=True)
-    score: Mapped[float | None] = mapped_column(Integer, nullable=True)
+    score: Mapped[float | None] = mapped_column(Float, nullable=True)

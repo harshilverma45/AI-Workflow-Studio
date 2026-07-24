@@ -2,8 +2,10 @@ fastapi
 uvicorn
 langgraph
 langchain
-langchain-openai
+langchain-google-genai
 python-dotenv
+pydantic-settings
 pydantic
 sqlalchemy
 websockets
+pytest

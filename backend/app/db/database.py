@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from app.core.config import settings
 
@@ -16,3 +16,12 @@ def create_db_and_tables() -> None:
     from app.models import execution, iteration  # noqa: F401
 
     Base.metadata.create_all(bind=engine)
+
+
+def get_db() -> Session:
+    """Yield a database session for a single API request."""
+    database = SessionLocal()
+    try:
+        yield database
+    finally:
+        database.close()

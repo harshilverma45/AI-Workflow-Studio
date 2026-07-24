@@ -4,7 +4,7 @@ A visual platform for exploring Loop Engineering and iterative AI agent workflow
 
 ## Stack
 
-- Backend: FastAPI, SQLAlchemy, LangGraph, LangChain, WebSockets
+- Backend: FastAPI, SQLAlchemy, LangGraph, LangChain, WebSockets, Gemini
 - Frontend: React, Vite, Tailwind CSS, React Flow
 
 ## Quick start
@@ -29,4 +29,24 @@ npm run dev
 
 ## Current phase
 
-Phase 1 scaffold is now in place with a lightweight FastAPI API, SQLite models, and a React/Vite starter UI.
+Phase 1 backend persistence is working with a dependency-free deterministic fallback. The planned AI provider is Gemini using its available free API tier. OpenAI and Ollama are not required for this project.
+
+## Gemini provider
+
+Create a Gemini API key through Google AI Studio, then set these values in `backend/.env`:
+
+```powershell
+MODEL_PROVIDER=gemini
+GEMINI_API_KEY=your-gemini-key
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+Gemini free-tier quotas and model availability are controlled by Google and can change. The application does not require a paid account.
+
+## Offline fallback
+
+```env
+MODEL_PROVIDER=local
+```
+
+Use the offline fallback for API and database tests without an API key.
